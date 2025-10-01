@@ -1,13 +1,12 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <cmath>
 
-#define RD "D:/Graph_lab1/image.ppm"
-#define WD "D:/Graph_lab1/new_image2.ppm"
+#define RD "images.ppm"
+#define WD "new_image2.ppm"
 #define PI 3.14159265358979323846 
 
 using namespace std;
@@ -60,11 +59,11 @@ class Canvas1 {
 public:
     int width, height;
     std::vector<RGB> pixels;
-    Canvas1(const int& w, const int& h) 
+    Canvas1(const int& w, const int& h)
     {
         width = w;
         height = h;
-        pixels.assign(width * height,{255,255,255});
+        pixels.assign(width * height, { 255,255,255 });
     }
     void Replace_Pixel(int x, int y, RGB& color)
     {
@@ -84,12 +83,12 @@ public:
             Replace_Pixel(p1.x, p1.y, color);
             bx += stepx;
             by += stepy;
-            p1.x += sx*(bx / d);
+            p1.x += sx * (bx / d);
             p1.y += sy * (by / d);
             bx %= d;
             by %= d;
         }
-       
+
     }
     void CopyLine(Point p1, Point p2, Point i1, Point i2, Image1 image)
     {
@@ -111,7 +110,7 @@ public:
 
         while (true) {
             if (p1.x == p2.x && p1.y == p2.y) break;
-            Replace_Pixel(p1.x, p1.y, image.pixels[i1.y*image.width+i1.x]);
+            Replace_Pixel(p1.x, p1.y, image.pixels[i1.y * image.width + i1.x]);
             bx += stepx;
             by += stepy;
             p1.x += sx * (bx / d);
@@ -139,12 +138,12 @@ public:
             e.y += 1;
         }
     }
-    void DrawFunk( int step, Point zero, int l, RGB color)
+    void DrawFunk(int step, Point zero, int l, RGB color)
     {
-        for (int i = 1; i <= l; i += 1) 
+        for (int i = 1; i <= l; i += 1)
         {
-            cout << zero.x + i << ' '<< sin(2 * PI * ((double)i / step)) << '\n';
-            DrawLine({ zero.x + i-1, int(zero.y - (zero.y - 1) * sin(2 * PI * ((double)(i-1) / step))) }, { zero.x + i, int(zero.y - (zero.y - 1) * sin(2 * PI * ((double)i / step))) }, color);
+            cout << zero.x + i << ' ' << sin(2 * PI * ((double)i / step)) << '\n';
+            DrawLine({ zero.x + i - 1, int(zero.y - (zero.y - 1) * sin(2 * PI * ((double)(i - 1) / step))) }, { zero.x + i, int(zero.y - (zero.y - 1) * sin(2 * PI * ((double)i / step))) }, color);
         }
     }
     bool Save_Canvas(const string& filepath)
@@ -167,19 +166,19 @@ int main()
 {
     Canvas1 canvas(600, 300);
     Image1 img(RD);
-    Point place{ 300,170 };
-    Point p1{ 50,150 };
-    Point p2{300,100 };
+    Point place{ 0,220};
+    Point p1{ 90,130 };
+    Point p2{ 150,75 };
     RGB color = { 0,0,0 };
     RGB bl = { 0,0,255 };
-    canvas.CopyPart(img, place, p1, p2, 70);
-    canvas.DrawLine({ 0, canvas.height / 2 }, { canvas.width-1, canvas.height / 2 }, color);
-    canvas.DrawLine({ canvas.width / 2, 0 }, { canvas.width / 2, (canvas.height-1)}, color);
+    canvas.CopyPart(img, place, p1, p2, 50);
+    canvas.DrawLine({ 0, canvas.height / 2 }, { canvas.width - 1, canvas.height / 2 }, color);
+    canvas.DrawLine({ canvas.width / 2, 0 }, { canvas.width / 2, (canvas.height - 1) }, color);
     canvas.DrawLine({ canvas.width - 1, canvas.height / 2 }, { canvas.width - 1 - canvas.width / 20, canvas.height / 2 + canvas.height / 20 }, color);
     canvas.DrawLine({ canvas.width - 1, canvas.height / 2 }, { canvas.width - 1 - canvas.width / 20, canvas.height / 2 - canvas.height / 20 }, color);
     canvas.DrawLine({ canvas.width / 2 + canvas.width / 20 ,canvas.height / 20, }, { canvas.width / 2, 0 }, color);
     canvas.DrawLine({ canvas.width / 2 - canvas.width / 20 ,canvas.height / 20, }, { canvas.width / 2, 0 }, color);
-    canvas.DrawFunk(canvas.width / 10, { canvas.width / 2, canvas.height / 2 }, canvas.width / 2 - 1,color);
+    canvas.DrawFunk(canvas.width / 10, { canvas.width / 2, canvas.height / 2 }, canvas.width / 2 - 1, color);
     canvas.Save_Canvas(WD);
 }
 
